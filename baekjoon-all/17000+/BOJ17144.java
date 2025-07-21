@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class BOJ17144 {
+public class Main {
     // 입력을 위한 객체 선언
     static BufferedReader  br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
@@ -25,7 +25,7 @@ public class BOJ17144 {
     static int[] dy = {1, 0, -1,  0}; // 우하좌상
     
     // 미세먼지 확산 함수
-    static void spread() {
+    static void BOJ17144() {
         // 방 전체 탐색
         // 임시 배열을 이용해서 값을 저장하면
         // 확산의 영향이 중복되는 걸 방지 가능
@@ -41,8 +41,9 @@ public class BOJ17144 {
                         // 방을 벗어나거나 공기청정기를 만나면 continue
                         if (nx < 0 || nx >= R || ny < 0 || ny >= C || tmpRoom[nx][ny] == -1) continue;
                         
-                        tmpRoom[nx][ny] += room[x][y] / 5; // 미세먼지 확산
-                        tmpRoom[x][y]   -= room[x][y] / 5; // 확산한만큼 감소
+                        int spreadDust = room[x][y] / 5; // 확산하는 양
+                        tmpRoom[nx][ny] += spreadDust;   // 미세먼지 확산
+                        tmpRoom[x][y]   -= spreadDust;   // 확산한만큼 감소
                     }
                 }
             }
