@@ -10,7 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class BOJ_17478 {
+public class BOJ17478 {
 	// 입력을 위한 객체 선언
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	

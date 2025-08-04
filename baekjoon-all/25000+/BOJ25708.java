@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class BOJ_25708 {
+public class BOJ25708 {
 	// 입력을 위한 객체 선언
 	static BufferedReader  br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;

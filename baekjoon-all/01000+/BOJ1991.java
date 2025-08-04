@@ -1,5 +1,5 @@
 /*
- * 백준 1991 : 트리 순회
+ * 백준 1991번 : 트리 순회
  * https://www.acmicpc.net/problem/1991
  * 난이도 : 실버 1
  * 풀이 날짜 : 2025-07-16
@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class BOJ_1991 {
+public class BOJ1991 {
     // 입력을 위한 객체 선언
     static BufferedReader  br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;

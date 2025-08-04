@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class BOJ_12873 {
+public class BOJ12873 {
 	// 입력을 위한 객체 선언
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	

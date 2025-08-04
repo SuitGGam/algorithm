@@ -13,7 +13,7 @@ import java.util.StringTokenizer;
 import java.util.PriorityQueue;
 import java.util.Arrays;
 
-public class BOJ_1026 {
+public class BOJ1026 {
 	// 입력을 위한 객체 선언
 	static BufferedReader  br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;

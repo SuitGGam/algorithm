@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.PriorityQueue;
 
-public class BOJ_1927 {
+public class BOJ1927 {
 	// 입력을 위한 객체 선언
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	
