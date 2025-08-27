@@ -13,13 +13,6 @@ import java.util.StringTokenizer;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
-import java.util.ArrayList;
-import java.util.PriorityQueue;
-
 public class BOJ1238 {
     // 입력을 위한 객체 선언
     static BufferedReader  br = new BufferedReader(new InputStreamReader(System.in));
@@ -62,7 +55,7 @@ public class BOJ1238 {
                 if (goXTime[nxtNode.E] > goXTime[curNode.E] + nxtNode.T) {
                     goXTime[nxtNode.E] = goXTime[curNode.E] + nxtNode.T; // 소요 시간 갱신
                     
-                    minHeap.add(nxtNode); // 다음 마을 PQ에 삽입
+                    minHeap.add(new Node(nxtNode.E, goXTime[nxtNode.E])); // 다음 마을 PQ에 삽입
                 }
             }
         }
@@ -90,7 +83,7 @@ public class BOJ1238 {
                 if (goHomeTime[nxtNode.E] > goHomeTime[curNode.E] + nxtNode.T) {
                     goHomeTime[nxtNode.E] = goHomeTime[curNode.E] + nxtNode.T; // 소요 시간 갱신
                     
-                    minHeap.add(nxtNode); // 다음 마을 PQ에 삽입
+                    minHeap.add(new Node(nxtNode.E, goHomeTime[nxtNode.E])); // 다음 마을 PQ에 삽입
                 }
             }
         }
