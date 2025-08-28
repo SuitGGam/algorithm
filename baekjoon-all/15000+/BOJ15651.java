@@ -18,7 +18,6 @@ public class BOJ15651 {
 	
 	static int N, M; // 자연수의 개수, 고를 숫자의 개수
 	static int[] selected; // 고른 숫자를 담을 배열
-	static boolean[] visited; // 방문 처리를 할 배열
 	
 	static StringBuilder sb = new StringBuilder(); // 결과값을 담을 객체
 	static void permutationWithRepetition(int start, int depth) { // 중복순열을 만드는 함수
@@ -44,7 +43,6 @@ public class BOJ15651 {
 		br.close();
 		
 		selected = new int[M + 1]; // 배열 크기 지정
-		visited  = new boolean[N + 1]; // 배열 크기 지정
 		permutationWithRepetition(1, 1); // 중복순열 만들기
 		
 		// 결과값 출력하기
