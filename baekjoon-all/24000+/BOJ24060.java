@@ -80,12 +80,12 @@ public class BOJ24060 {
     
     public static void main(String[] args) throws IOException {
         st = new StringTokenizer(br.readLine(), " ");
-        int A = Integer.parseInt(st.nextToken());
-        K = Integer.parseInt(st.nextToken());
+        int N = Integer.parseInt(st.nextToken()); // 배열의 크기
+        K = Integer.parseInt(st.nextToken()); // 저장 횟수
         
-        int[] arr = new int[A]; // 원소를 담을 배열
+        int[] arr = new int[N]; // 원소를 담을 배열
         st = new StringTokenizer(br.readLine(), " ");
-        for (int i = 0; i < A; i++) arr[i] = Integer.parseInt(st.nextToken()); // 원소 저장
+        for (int i = 0; i < N; i++) arr[i] = Integer.parseInt(st.nextToken()); // 원소 저장
         
         // 버퍼 닫기
         br.close();
