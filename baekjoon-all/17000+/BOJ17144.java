@@ -25,7 +25,7 @@ public class BOJ17144 {
     static int[] dy = {1, 0, -1,  0}; // 우하좌상
     
     // 미세먼지 확산 함수
-    static void BOJ17144() {
+    static void spread() {
         // 방 전체 탐색
         // 임시 배열을 이용해서 값을 저장하면
         // 확산의 영향이 중복되는 걸 방지 가능
