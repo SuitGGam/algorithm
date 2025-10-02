@@ -30,7 +30,7 @@ public class BOJ7569 {
         }
     } // Node 종료
     
-    static int minDays; // 최소 일
+    static int minDays, unripe; // 최소 일, 안 익은 토마토 개수
     // 전우후좌상하
     static int[] dx = {-1, 0, 1,  0,  0, 0};
     static int[] dy = { 0, 1, 0, -1,  0, 0};
@@ -38,13 +38,9 @@ public class BOJ7569 {
     static void ripe(int[][][] tomato, int H, int N, int M) { // 토마토를 익히는 함수
         boolean valid; // 토마토가 다 익었는지 확인하는 변수
         while (!queue.isEmpty()) {
-            valid = checkRipe(tomato, H, N, M); // 토마토가 다 익었는지 확인
             
-            if (valid) return; // 토마토가 다 익은 경우
-            else if (!valid && queue.isEmpty()) { // 토마토가 다 익을 수 없는 경우
-                minDays = -1;
-                return;
-            } else { // 토마토를 더 익힐 수 있는 경우
+            if (unripe == 0) return; // 토마토가 다 익은 경우
+            else { // 토마토를 더 익힐 수 있는 경우
                 int size = queue.size(); // 현재 큐 크기
                 for (int i = 0; i < size; i++) { // 현재 큐만큼만 반복
                     Node node = queue.poll(); // 좌표 꺼내기
@@ -57,6 +53,7 @@ public class BOJ7569 {
                         if (nx >= 0 && nx < N && ny >= 0 && ny < M && nz >= 0 && nz < H) {
                             if (tomato[nz][nx][ny] == 0) { // 안 익은 토마토인 경우
                                 tomato[nz][nx][ny] = 1; // 토마토 익음 처리
+                                unripe--; // 안 익은 토마토 개수 감소
                                 queue.add(new Node(nx, ny, nz)); // 토마토 좌표 추가
                             }
                         }
@@ -67,22 +64,8 @@ public class BOJ7569 {
             }
         }
         
-        valid = checkRipe(tomato, H, N, M); // 토마토가 다 익었는지 확인
-        if (valid) return; // 토마토가 다 익은 경우
-        else if (!valid) minDays = -1; // 토마토가 다 익을 수 없는 경우
+        if (unripe > 0) minDays = -1; // 토마토가 다 익을 수 없는 경우
     } // ripe 종료
-    
-    static boolean checkRipe(int[][][] tomato, int H, int N, int M) { // 토마토가 다 익었는지 확인하는 함수
-        for (int i = 0; i < H; i++) {
-            for (int j = 0; j < N; j++) {
-                for (int k = 0; k < M; k++) {
-                    if (tomato[i][j][k] == 0) return false; // 안 익은 토마토가 있다면 false 반환
-                }
-            }
-        }
-        
-        return true; // 다 익었으면 true 반환
-    } // checkRipe
     
     public static void main(String[] args) throws IOException {
         st = new StringTokenizer(br.readLine(), " ");
@@ -98,6 +81,7 @@ public class BOJ7569 {
                     int condition = Integer.parseInt(st.nextToken()); // 토마토의 상태
                     tomato[i][j][k] = condition; // 토마토 상태 저장
                     if (condition == 1) queue.add(new Node(j, k, i)); // 익은 토마토면 좌표 저장
+                    else if (condition == 0) unripe++; // 안 익은 토마토 개수 추가
                 }
             }
         }
