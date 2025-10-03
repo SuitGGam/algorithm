@@ -2,7 +2,7 @@
  * 백준 6593번 : 상범 빌딩
  * https://www.acmicpc.net/problem/6593
  * 난이도 : 골드 5
- * 풀이 날짜 : 2025-10-03
+ * 풀이 날짜 : 2025-10-04
  * 간단 설명 : 상범 빌딩을 탈출하는데 걸리는 최소 시간을 구하는 문제
  */
 
@@ -10,7 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
-import java.util.PriorityQueue;
+import java.util.ArrayDeque;
 
 public class BOJ6593 {
     // 입력을 위한 객체 선언
@@ -40,35 +40,21 @@ public class BOJ6593 {
     static int[] dy = { 0, 1, 0, -1,  0, 0};
     static int[] dz = { 0, 0, 0,  0, -1, 1};
     
-    static PriorityQueue<Node> minHeap = new PriorityQueue<>((o1, o2) -> Integer.compare(o1.time, o2.time)); // 좌표를 담을 큐
+    static ArrayDeque<Node> queue = new ArrayDeque<>(); // 좌표를 담을 큐
     static int escape(char[][][] building, int L, int R, int C) { // 빌딩을 탈출하는 BFS 함수
         int[][][] time = new int[L][R][C]; // 시간을 기록할 배열
         
-        for (int i = 0; i < L; i++) {
-            for (int j = 0; j < R; j++) {
-                for (int k = 0; k < C; k++) {
-                    time[i][j][k] = Integer.MAX_VALUE; // 시간 초기화
-                }
-            }
-        }
-        
-        time[minHeap.peek().z][minHeap.peek().x][minHeap.peek().y] = 0; // 시작점 시간 초기화
-        while (!minHeap.isEmpty()) {
-            Node curNode = minHeap.poll(); // 현재 노드
-            
-            // 현재 기록된 시간보다 꺼낸 시간이 더 크면 continue
-            if (time[curNode.z][curNode.x][curNode.y] < curNode.time) continue;
+        while (!queue.isEmpty()) {
+            Node curNode = queue.poll(); // 현재 노드
             
             for (int d = 0; d < 6; d++) {
                 int nz = curNode.z + dz[d];
                 int nx = curNode.x + dx[d];
                 int ny = curNode.y + dy[d];
                 
-                if (nz >= 0 && nz < L && nx >= 0 && nx < R && ny >= 0 && ny < C && building[nz][nx][ny] != '#') {
-                    if (time[nz][nx][ny] > time[curNode.z][curNode.x][curNode.y] + 1) {
-                        time[nz][nx][ny] = time[curNode.z][curNode.x][curNode.y] + 1; // 최소 시간 갱신
-                        minHeap.add(new Node(nz, nx, ny, time[nz][nx][ny])); // pq에 다음 Node add
-                    }
+                if (nz >= 0 && nz < L && nx >= 0 && nx < R && ny >= 0 && ny < C && building[nz][nx][ny] != '#' & time[nz][nx][ny] == 0) {
+                    time[nz][nx][ny] = time[curNode.z][curNode.x][curNode.y] + 1; // 누적 시간 갱신
+                    queue.add(new Node(nz, nx, ny, time[nz][nx][ny])); // queue에 다음 Node add
                 }
             }
         }
@@ -93,7 +79,7 @@ public class BOJ6593 {
                     String info = br.readLine(); // 상범 빌딩의 정보
                     for (int k = 0; k < C; k++) {
                         building[i][j][k] = info.charAt(k); // 상범 빌딩 정보 저장
-                        if (building[i][j][k] == 'S') minHeap.add(new Node(i, j, k, 0)); // 시작점 pq에 add
+                        if (building[i][j][k] == 'S') queue.add(new Node(i, j, k, 0)); // 시작점 queue에 add
                         if (building[i][j][k] == 'E') escapeNode = new Node(i, j, k); // 탈출 좌표 등록
                     }
                 }
@@ -103,7 +89,7 @@ public class BOJ6593 {
             int minMinute = escape(building, L, R, C); // 탈출 시작
             
             // 결과값 추가하기
-            if (minMinute != Integer.MAX_VALUE) sb.append("Escaped in ").append(minMinute).append(" minute(s).\n");
+            if (minMinute != 0) sb.append("Escaped in ").append(minMinute).append(" minute(s).\n");
             else sb.append("Trapped!\n");
         }
         
