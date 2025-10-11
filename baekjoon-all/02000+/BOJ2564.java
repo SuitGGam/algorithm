@@ -16,48 +16,45 @@ public class BOJ2564 {
     static BufferedReader  br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
     
+    static int width, height, perimeter; // 가로 길이, 세로 길이, 네모의 둘레 길이
+    static int straightenOut(int dir, int loc) { // 네모를 일자로 펴서 거리를 구하는 함수
+        // 북동남서 순서로 펴기
+        if (dir == 1) return loc; // 북쪽
+        else if (dir == 2) return width + height + (width - loc); // 남쪽
+        else if (dir == 3) return 2 * width + height + (height - loc); // 서쪽
+        else return width + loc; // 동쪽
+    } // straightenOut 종료
+    
     public static void main(String[] args) throws IOException{
         st = new StringTokenizer(br.readLine(), " ");
-        int width  = Integer.parseInt(st.nextToken()); // 가로 길이
-        int height = Integer.parseInt(st.nextToken()); // 세로 길이
+        width  = Integer.parseInt(st.nextToken()); // 가로 길이
+        height = Integer.parseInt(st.nextToken()); // 세로 길이
+        
+        perimeter = 2 * (width + height); // 네모의 둘레 길이
         
         int storeCnt = Integer.parseInt(br.readLine()); // 상점의 개수
-        int[][] location = new int[storeCnt][2]; // 상점 위치 배열
+        int[] storeDistance = new int[storeCnt]; // 상점들의 거리 배열
         for (int i = 0; i < storeCnt; i++) {
             st = new StringTokenizer(br.readLine(), " ");
             int dir = Integer.parseInt(st.nextToken()); // 상점의 방향
             int loc = Integer.parseInt(st.nextToken()); // 경계선으로부터의 상점의 거리
             
-            location[i][0] = dir;
-            location[i][1] = loc;
+            storeDistance[i] = straightenOut(dir, loc); // 상점들의 거리
         }
         
         st = new StringTokenizer(br.readLine(), " ");
         int dongDir = Integer.parseInt(st.nextToken()); // 동근이의 방향
-        int dongloc = Integer.parseInt(st.nextToken()); // 경계선으로부터의 동근이의 거리
+        int dongLoc = Integer.parseInt(st.nextToken()); // 경계선으로부터의 동근이의 거리
+        
+        int dongDistance = straightenOut(dongDir, dongLoc); // 동근이의 거리
         
         // 버퍼 닫기
         br.close();
         
         int sumMinDistance = 0; // 최단 거리의 합
         for (int i = 0; i < storeCnt; i++) {
-            if (dongDir == location[i][0]) { // 같은 방향인 경우
-                sumMinDistance += Math.abs(dongloc - location[i][1]); // 거리 차이만큼 더해주기
-            } else if ((dongDir == 1 && location[i][0] == 2) || (dongDir == 2 && location[i][0] == 1)) { // 남북, 북남인 경우
-                sumMinDistance += Math.min((dongloc + location[i][1]), (2 * width - dongloc - location[i][1])) + height;
-            } else if ((dongDir == 3 && location[i][0] == 4) || (dongDir == 4 && location[i][0] == 3)) { // 동서, 서동인 경우
-                sumMinDistance += Math.min((dongloc + location[i][1]), (2 * height - dongloc - location[i][1])) + width;
-            } else if ((dongDir == 1 || dongDir == 2) && (location[i][0] == 3 || location[i][0] == 4)) { // 동근이가 남 또는 북이고 상점이 동 또는 서인 경우
-                if (dongDir == 1 && location[i][0] == 3) sumMinDistance += dongloc + location[i][1];
-                else if (dongDir == 1 && location[i][0] == 4) sumMinDistance += width - dongloc + location[i][1];
-                else if (dongDir == 2 && location[i][0] == 3) sumMinDistance += dongloc + height - location[i][1];
-                else sumMinDistance += width - dongloc + height - location[i][1];
-            } else { // 동근이가 동 또는 서이고 상점이 남 또는 북인 경우
-                if (dongDir == 3 && location[i][0] == 1) sumMinDistance += dongloc + location[i][1];
-                else if (dongDir == 3 && location[i][0] == 2) sumMinDistance += height - dongloc + location[i][1];
-                else if (dongDir == 4 && location[i][0] == 1) sumMinDistance += dongloc + width - location[i][1];
-                else sumMinDistance += height - dongloc + width - location[i][1];
-            }
+            int diff = Math.abs(dongDistance - storeDistance[i]); // 동근이와 상점의 거리 차이
+            sumMinDistance += Math.min(diff, perimeter - diff); // 시계 방향, 반 시계 방향 중에 짧은 길이
         }
         
         // 결과값 출력하기
