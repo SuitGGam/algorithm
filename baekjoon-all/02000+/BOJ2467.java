@@ -10,7 +10,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
-import java.util.Arrays;
 
 public class BOJ2467 {
     static int[] mix(int N, int[] solution) { // 두 용액을 섞는 함수
@@ -49,9 +48,7 @@ public class BOJ2467 {
         // 버퍼 닫기
         br.close();
         
-        Arrays.sort(solution); // 용액 비내림차순 정렬
         int[] ans = mix(N, solution); // 정답 용액 두 가지
-        Arrays.sort(ans); // 정답 용액 비내림차순 정렬
         
         // 결과값 출력하기
         System.out.print(ans[0] + " " + ans[1]);
