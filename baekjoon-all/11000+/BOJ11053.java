@@ -54,4 +54,4 @@ public class BOJ11053 {
         // 결과값 출력하기
         System.out.print(maxLen);
     } // main 종료
-} // Main 종
+} // Main 종료
