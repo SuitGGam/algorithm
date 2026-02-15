@@ -17,7 +17,7 @@ public class BOJ18221 {
         BufferedReader  br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
 
-        int N = Integer.parseInt(br.readLine()); // 자연수
+        int N = Integer.parseInt(br.readLine()); // 강의실의 크기
         int[][] room = new int[N][N]; // 강의실 배열
 
         int proX = 0; // 교수님의 X좌표
