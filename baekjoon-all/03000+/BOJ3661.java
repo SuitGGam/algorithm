@@ -12,7 +12,7 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 import java.util.PriorityQueue;
 
-public class Main {
+public class BOJ3661 {
     static class Friend { // 친구 정보 class
         int cost; // 최대로 낼 수 있는 금액
         int idx;  // 리스트 순서
