@@ -20,20 +20,7 @@ public class BOJ1094 {
         // 버퍼 닫기
         br.close();
 
-        int num = 64; // 막대의 시작 길이
-        int cnt = 0; // 막대의 개수
-        while (X > 0) {
-            if (X < num) { // X보다 막대의 길이가 더 긴 경우
-                num /= 2;
-            } else if (X == num) { // X랑 막대의 길이가 똑같은 경우
-                X -= num;
-                cnt++;
-            } else { // X보다 막대의 길이가 짧은 경우
-                X -= num;
-                num /= 2;
-                cnt++;
-            }
-        }
+        int cnt = Integer.bitCount(X); // X를 이진수로 변환했을 때 1의 개수
 
         // 결과값 출력하기
         System.out.print(cnt);
