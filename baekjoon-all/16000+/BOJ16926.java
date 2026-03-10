@@ -13,24 +13,31 @@ import java.util.StringTokenizer;
 
 public class BOJ16926 {
     static int N, M; // 배열의 세로 크기, 배열의 가로 크기
-    static int[][] arr; // 회전 시킬 배열
+    static int[][] arr; // 회전시킬 배열
 
-    static void rotate(int xStart, int xEnd, int yStart, int yEnd) { // 배열을 회전시키는 함수
-        // 종료 조건 - 회전 시킬 곳이 없을 때
-        if (xStart >= xEnd || yStart >= yEnd) return;
+    static void rotate() { // 배열을 회전시키는 함수
+        int layer = Math.min(N, M) / 2; // 테두리 반절의 길이
 
-        int tmp1 = arr[xStart][yStart]; // 왼쪽 상단 임시 저장
-        for (int y = yStart; y < yEnd; y++) arr[xStart][y] = arr[xStart][y + 1]; // 위쪽 행
-        int tmp2 = arr[xEnd][yStart]; // 왼쪽 하단 임시 저장
-        for (int x = xEnd; x > xStart + 1; x--) arr[x][yStart] = arr[x - 1][yStart]; // 왼쪽 열
-        arr[xStart + 1][yStart] = tmp1; // 왼쪽 상단 값 옮기기
-        tmp1 = arr[xEnd][yEnd]; // 우측 하단 임시 저장
-        for (int y = yEnd; y > yStart + 1; y--) arr[xEnd][y] = arr[xEnd][y - 1]; // 아래쪽 행
-        arr[xEnd][yStart + 1] = tmp2; // 왼쪽 하단 값 옮기기
-        for (int x = xStart; x < xEnd - 1; x++) arr[x][yEnd] = arr[x + 1][yEnd]; // 오른쪽 열
-        arr[xEnd - 1][yEnd] = tmp1; // 우측 하단값 옮기기
+        for (int i = 0; i < layer; i++) {
+            int xStart = i, xEnd = N - 1 - i; // 행 시작점, 끝점
+            int yStart = i, yEnd = M - 1 - i; // 열 시작점, 끝점
 
-        rotate(xStart + 1, xEnd - 1, yStart + 1, yEnd - 1); // 안쪽 회전 호출
+            int tmp = arr[xStart][yStart]; // 시작점 보관
+
+            // 1. 상단 행 왼쪽으로 밀기 (시작점 빈 칸 채우기)
+            for (int y = yStart; y < yEnd; y++) arr[xStart][y] = arr[xStart][y + 1];
+
+            // 2. 우측 열 위쪽으로 밀기 (상단 행 빈 칸 채우기)
+            for (int x = xStart; x < xEnd; x++) arr[x][yEnd] = arr[x + 1][yEnd];
+
+            // 3. 하단 행 오른쪽으로 밀기 (우측 열 빈 칸 채우기)
+            for (int y = yEnd; y > yStart; y--) arr[xEnd][y] = arr[xEnd][y - 1];
+
+            // 4. 좌측 열 아래쪽으로 밀기 (하단 행 빈 칸 채우기)
+            for (int x = xEnd; x > xStart; x--) arr[x][yStart] = arr[x - 1][yStart];
+
+            arr[xStart + 1][yStart] = tmp; // 시작점 옮기기
+        }
     } // rotate 종료
 
     public static void main(String[] args) throws IOException {
@@ -40,18 +47,18 @@ public class BOJ16926 {
 
         N = Integer.parseInt(st.nextToken()); // 배열의 세로 크기
         M = Integer.parseInt(st.nextToken()); // 배열의 가로 크기
-        int R = Integer.parseInt(st.nextToken()); // 회전 횟수
+        int R = Integer.parseInt(st.nextToken()); // 회전의 수
 
-        arr = new int[N][M]; // 회전 시킬 배열
+        arr = new int[N][M]; // 회전시킬 배열
         for (int x = 0; x < N; x++) {
             st = new StringTokenizer(br.readLine(), " ");
-            for (int y = 0; y < M; y++) arr[x][y] = Integer.parseInt(st.nextToken()); // 원소 입력
+            for (int y = 0; y < M; y++) arr[x][y] = Integer.parseInt(st.nextToken()); // 원소 저장
         }
 
         // 버퍼 닫기
         br.close();
 
-        for (int i = 0; i < R; i++) rotate(0, N - 1, 0, M - 1); // 배열 회전
+        for (int i = 0; i < R; i++) rotate(); // 배열 회전시키기
 
         StringBuilder sb = new StringBuilder(); // 결과값을 저장할 객체
         for (int x = 0; x < N; x++) {
